@@ -6,8 +6,9 @@ import (
 	"strconv"
 )
 
+// ReadInts reads all integers from the file
 func ReadInts(file string) ([]int, error) {
-	lines, err := readLines(file)
+	lines, err := ReadLines(file)
 	if err != nil {
 		return nil, err
 	}
@@ -27,7 +28,8 @@ func ReadInts(file string) ([]int, error) {
 	return ints, nil
 }
 
-func readLines(fileName string) ([]string, error) {
+// ReadLines reads all lines from the file
+func ReadLines(fileName string) ([]string, error) {
 	file, err := os.Open(fileName)
 	if err != nil {
 		return nil, err
