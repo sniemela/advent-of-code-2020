@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"bufio"
-	"os"
+	"io/ioutil"
 	"strconv"
+	"strings"
 )
 
 // ReadInts reads all integers from the file
@@ -30,18 +30,10 @@ func ReadInts(file string) ([]int, error) {
 
 // ReadLines reads all lines from the file
 func ReadLines(fileName string) ([]string, error) {
-	file, err := os.Open(fileName)
+	bytes, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	var lines []string
-
-	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
-	}
-
-	return lines, nil
+	content := string(bytes)
+	return strings.Split(content, "\n"), nil
 }
