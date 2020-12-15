@@ -50,14 +50,8 @@ func part2(lines []string) int {
 		switch action {
 		case 'F':
 			ship.forward(input)
-		case 'N':
-			waypoint.y -= input
-		case 'S':
-			waypoint.y += input
-		case 'E':
-			waypoint.x += input
-		case 'W':
-			waypoint.x -= input
+		case 'N', 'S', 'E', 'W':
+			waypoint.move(action, input)
 		case 'L', 'R':
 			waypoint.rotate(action, input)
 		}
@@ -92,6 +86,19 @@ func (p *point) rotate(direction rune, degrees int) {
 	p.y = dy
 }
 
+func (p *point) move(direction rune, units int) {
+	switch direction {
+	case 'N':
+		p.y -= units
+	case 'S':
+		p.y += units
+	case 'E':
+		p.x += units
+	case 'W':
+		p.x -= units
+	}
+}
+
 type ship struct {
 	direction *point
 	position  *point
@@ -102,16 +109,7 @@ func newShip(direction *point, position *point) *ship {
 }
 
 func (s *ship) move(direction rune, units int) {
-	switch direction {
-	case 'N':
-		s.position.y -= units
-	case 'S':
-		s.position.y += units
-	case 'E':
-		s.position.x += units
-	case 'W':
-		s.position.x -= units
-	}
+	s.position.move(direction, units)
 }
 
 func (s *ship) forward(units int) {
